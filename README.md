@@ -1,5 +1,11 @@
 # note-taking-app
 
+===
+
+This is an application is built with VUE.js (boostraped with vue cli)
+and uses Firebase for backend services (authentication & data management)
+
+
 ## Project setup
 ```
 yarn install

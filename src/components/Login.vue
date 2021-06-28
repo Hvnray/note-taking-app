@@ -1,10 +1,8 @@
 <template>
   <div>
     <md-card md-with-hover class="padding">
-      <!-- <md-ripple> -->
       <md-card-header>
         <div class="md-subhead">Login to Start taking Notes</div>
-        <!-- <div class="md-subhead">It also have a ripple</div> -->
       </md-card-header>
 
       <md-card-content>
@@ -144,8 +142,7 @@ export default {
         form: { email, password },
       } = this;
       try {
-        const { user } = await auth.signInWithEmailAndPassword(email, password);
-        console.log("data", { email, password }, "resp", user);
+        await auth.signInWithEmailAndPassword(email, password);
         window.setTimeout(() => {
           this.sending = false;
           this.clearForm();

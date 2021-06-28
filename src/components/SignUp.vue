@@ -125,7 +125,6 @@
 .padding {
   padding: 24px;
   margin: 12px;
-  /* width: 50rem; */
 }
 .md-card {
   width: 30rem;
@@ -133,7 +132,6 @@
   display: block;
   align-self: center;
   margin: 0 auto;
-  /* vertical-align: top; */
 }
 </style>
 <script>
@@ -155,10 +153,6 @@ export default {
     showDialog: {
       type: Boolean,
       default: false,
-      // required: true,
-      // validator: function (value) {
-      //   return value >= 0;
-      // },
     },
   },
   mixins: [validationMixin],
@@ -227,12 +221,6 @@ export default {
           email,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         });
-        console.log(
-          "data",
-          { firstName, lastName, email, password },
-          "resp",
-          user
-        );
         window.setTimeout(() => {
           this.sending = false;
           this.clearForm();

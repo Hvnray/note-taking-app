@@ -18,10 +18,6 @@ export default {
     message: {
       type: String,
       default: "",
-      // required: true,
-      // validator: function (value) {
-      //   return value >= 0;
-      // },
     },
   },
 };

@@ -3,12 +3,10 @@
     <h3 class="md-title f-title">Note Taking App</h3>
     <div class="filterinput">
       <md-field>
-        <!-- <label>search</label> -->
         <md-input
           md-layout="box"
           v-model="search"
           placeholder="search notes..."
-          style="color: white"
         />
         <md-icon>search</md-icon>
       </md-field>
@@ -16,7 +14,9 @@
     <p class="md-title t-title">
       <small>welcome {{ email || "" }}</small>
     </p>
-    <md-button class="md-accent" @click="$emit('signOut')">Log out</md-button>
+    <md-button class="md-accent md-raised" @click="$emit('signOut')"
+      >Log out</md-button
+    >
   </div>
 </template>
 
@@ -31,13 +31,11 @@ export default {
     },
   },
   watch: {
-    // Handles internal model changes.
     search(newVal) {
       this.$nextTick(() => {
         this.$emit("input", newVal);
       });
     },
-    // Handles external model changes.
     value: {
       handler(newVal) {
         if (!newVal) {

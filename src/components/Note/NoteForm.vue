@@ -96,34 +96,6 @@
   </md-dialog>
 </template>
 
-<style lang="css" scoped>
-.md-progress-bar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-}
-.md-dialog {
-  padding: 24px;
-}
-.md-dialog-title {
-  text-align: center;
-  text-transform: uppercase;
-}
-.padding {
-  padding: 24px;
-  margin: 12px;
-  /* width: 50rem; */
-}
-.md-card {
-  width: 30rem;
-  margin: 4px;
-  display: block;
-  align-self: center;
-  margin: 0 auto;
-  /* vertical-align: top; */
-}
-</style>
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
@@ -386,3 +358,32 @@ export default {
   },
 };
 </script>
+
+<style lang="css" scoped>
+.md-progress-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+.md-dialog {
+  padding: 24px;
+}
+.md-dialog-title {
+  text-align: center;
+  text-transform: uppercase;
+}
+.padding {
+  padding: 24px;
+  margin: 12px;
+  /* width: 50rem; */
+}
+.md-card {
+  width: 30rem;
+  margin: 4px;
+  display: block;
+  align-self: center;
+  margin: 0 auto;
+  /* vertical-align: top; */
+}
+</style>

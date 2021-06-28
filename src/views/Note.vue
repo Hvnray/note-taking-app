@@ -183,7 +183,6 @@ export default {
         .get()
         .then((doc) => {
           if (doc.exists) {
-            console.log("Document data:", doc.data());
             this.userEmail = `${doc.data().firstName} ${doc.data().lastName}`;
           }
         })
@@ -207,7 +206,6 @@ export default {
                 arr.push(obj);
               });
               this.userLabelList = arr;
-              console.log(arr, "handled userLabelList");
             },
             (error) => {
               this.opensnackbar = true;
@@ -234,14 +232,8 @@ export default {
               snapshot.forEach((doc) => {
                 const obj = { id: doc.id, ...doc.data() };
                 arr.push(obj);
-                // allLabels = [
-                //   ...allLabels,
-                //   ...(obj.labels?.map((b) => b.text) || []),
-                // ];
               });
               this.userNotesList = arr;
-              // this.userLabelsUnique = [...new Set(allLabels)];
-              console.log(this.userNotesList, "userNotesList");
               this.isLoadingData = false;
             },
             (error) => {
@@ -258,7 +250,6 @@ export default {
       }
     },
     filterByLabel(label) {
-      console.log("filterByLabel", label);
       this.labelClickFilter = label.text;
     },
     handleEdit(data) {
@@ -266,7 +257,6 @@ export default {
       this.noteCounter++;
       this.currentData = { ...data };
       this.showForm = true;
-      console.log("handleEdit");
     },
     onDeleteCancel() {
       this.openDeleteConfirmHandler = false;
@@ -289,14 +279,13 @@ export default {
     },
     onDeleteConfirm() {
       const { uid } = auth.currentUser;
-      this.handleDeleteOfLabels();
+      // this.handleDeleteOfLabels();
       db.collection("USERS")
         .doc(uid)
         .collection("NOTES")
         .doc(this.currentData?.id)
         .delete()
         .then(() => {
-          console.log("Document successfully deleted!");
           this.openDeleteConfirmHandler = false;
           this.currentData = {};
           this.noteCounter++;
@@ -312,7 +301,6 @@ export default {
       this.noteCounter++;
       this.openDeleteConfirmHandler = true;
       this.currentData = { ...data };
-      console.log("handleDelete");
     },
     addNote() {
       this.isCreateMode = true;
@@ -328,7 +316,9 @@ export default {
         await auth.signOut();
         this.$router.replace({ name: "Home" });
       } catch (error) {
-        console.log(error);
+        this.opensnackbar = true;
+        this.errorMessage = typeof error === "string" ? error : error?.message;
+        console.error("Error removing document: ", error);
       }
     },
   },

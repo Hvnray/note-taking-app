@@ -18,14 +18,6 @@ const routes = [
     component: () => import("../views/Note.vue"),
     meta: { loginRequired: true },
   },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import("../views/About.vue"),
-  },
 ];
 
 const router = new VueRouter({
@@ -36,7 +28,8 @@ const router = new VueRouter({
 router.beforeEach((to, _, next) => {
   const authRequired = to.meta?.loginRequired;
   const isAuthenticated = auth.currentUser;
-  if (authRequired && !isAuthenticated) {
+  const isUsefulRoute = routes.every((b) => b.path !== to.path);
+  if (isUsefulRoute || (authRequired && !isAuthenticated)) {
     next("/");
   } else {
     next();
