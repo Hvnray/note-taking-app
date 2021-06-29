@@ -2,7 +2,7 @@
   <md-dialog
     class="padding"
     :md-active.sync="showDialog"
-    @md-clicked-outside="$emit('close-dialog')"
+    @md-clicked-outside="closeHandler"
   >
     <md-dialog-title>Sign Up To Note Book App</md-dialog-title>
 
@@ -94,9 +94,7 @@
           <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
           <md-card-actions>
-            <md-button class="md-accent" @click="$emit('close-dialog')"
-              >Close</md-button
-            >
+            <md-button class="md-accent" @click="closeHandler">Close</md-button>
             <md-button type="submit" class="md-primary" :disabled="sending"
               >Sign Up</md-button
             >
@@ -197,6 +195,13 @@ export default {
           "md-invalid": field.$invalid && field.$dirty,
         };
       }
+    },
+    closeHandler() {
+      this.clearForm();
+      this.sending = false;
+      this.errorMessage = "";
+      this.opensnackbar = false;
+      this.$emit("close-dialog");
     },
     clearForm() {
       this.$v.$reset();

@@ -11,7 +11,7 @@
         <span class="md-list-item-text">ALL</span>
       </md-list-item>
       <md-list-item
-        v-for="(label, i) in labels"
+        v-for="(label, i) in sortedLabels"
         :key="i"
         @click="$emit('label-selected', label)"
       >
@@ -27,6 +27,12 @@ export default {
   name: "Drawer",
   props: {
     labels: { type: Array, default: () => [] },
+  },
+  computed: {
+    sortedLabels() {
+      const { labels } = this;
+      return labels.sort((a, b) => a.text.localeCompare(b.text));
+    },
   },
 };
 </script>

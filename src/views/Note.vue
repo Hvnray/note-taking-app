@@ -113,6 +113,9 @@ export default {
     mdIcon() {
       return this.isLoadingData ? "loop" : "note_add";
     },
+    userId() {
+      return auth.currentUser?.uid;
+    },
     mdText() {
       return this.isLoadingData ? "Loading Data" : "No Notes Available";
     },
@@ -268,20 +271,50 @@ export default {
       if (this.currentData?.labels?.length === 0) {
         return;
       }
-      // const labelsTodelete = this.currentData?.labels;
-      // labelsTodelete.forEach(b=>{
+      const getLabelIds = this.currentData?.labels.map((b) =>
+        this.userLabelList.find((data) => data.text === b.text)
+      );
+      const currentData = { ...this.currentData, labels: getLabelIds };
 
-      // })
-      // // check if label is present in other notes except calling note
-      // this.userNotesList?.forEach((b) => {
-      //   const { labels } = b;
-      // });
+      // check if label is present in other notes except calling note
+      let allLabels = [];
+      let counter = 0;
+      this.userNotesList?.forEach((b) => {
+        if (b.id !== currentData.id) {
+          const { labels } = b;
+          allLabels = [...allLabels, ...(labels.map((b) => b.text) || [])];
+        }
+        counter++;
+      });
+
+      // after gathering, remove labels to delete
+      //by checking currentData labels not in all data labels
+      if (counter === this.userNotesList.length) {
+        const labelsToDelete = currentData.labels.filter(
+          ({ text }) => !allLabels.includes(text)
+        );
+
+        // BATCH DELETE LABELS
+        const batch = db.batch();
+        let counter2 = 0;
+        labelsToDelete.forEach((doc) => {
+          const docRef = db
+            .collection("USERS")
+            .doc(this.userId)
+            .collection("LABELS")
+            .doc(doc.id); //automatically generate unique id
+          batch.delete(docRef);
+          counter2++;
+        });
+        if (counter2 === labelsToDelete.length) {
+          return batch.commit();
+        }
+      }
     },
-    onDeleteConfirm() {
-      const { uid } = auth.currentUser;
-      // this.handleDeleteOfLabels();
+    async onDeleteConfirm() {
+      await this.handleDeleteOfLabels();
       db.collection("USERS")
-        .doc(uid)
+        .doc(this.userId)
         .collection("NOTES")
         .doc(this.currentData?.id)
         .delete()
