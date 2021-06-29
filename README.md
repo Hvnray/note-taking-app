@@ -2,9 +2,11 @@
 
 ===
 
-This is an application is built with VUE.js (boostraped with vue cli)
+This is an application built with VUE.js (boostraped with vue cli)
 and uses Firebase for backend services (authentication & data management)
 
+===
+## author : okebugwuchidoziehenry@gmail.com
 
 ## Project setup
 ```
